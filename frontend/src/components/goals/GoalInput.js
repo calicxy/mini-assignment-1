@@ -17,7 +17,7 @@ function GoalInput(props) {
     
     const data = new FormData();
     files.forEach((file, i) => {
-      data.append(`file${i}`, file, file.name);
+      data.append(`file${i+1}`, file, file.name);
     });
 
     props.onAddGoal(data)
@@ -31,7 +31,6 @@ function GoalInput(props) {
       <Card>
         <input
           type='file'
-          // id='files'
           onChange={handleFileChange}
           multiple
         />

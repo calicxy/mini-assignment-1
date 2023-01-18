@@ -5,7 +5,7 @@ import CourseGoals from './components/goals/CourseGoals';
 import ErrorAlert from './components/UI/ErrorAlert';
 
 function App() {
-  const [loadedChecksums, setLoadedChecksums] = useState([]);
+  const [loadedResponse, setResponse] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -23,22 +23,28 @@ function App() {
       });
 
       const resData = await response.json();
+      console.log(resData)
 
       if (!response.ok) {
         throw new Error(resData.message || 'Error calculating the checksum.');
       }
+      else {
+        setResponse(resData)
+      }
 
-      setLoadedChecksums((prevGoals) => {
-        const updatedGoals = [
-          {
-            id: resData.file.id,
-            name: resData.file.name,
-            checksum: resData.file.fileChecksum,
-          },
-          ...prevGoals,
-        ];
-        return updatedGoals;
-      });
+      
+      // setLoadedChecksums((prevGoals) => {
+      //   const updatedGoals = [
+      //     {
+      //       id: resData.file.id,
+      //       name: resData.file.name,
+      //       checksum: resData.file.fileChecksum,
+      //     },
+      //     ...prevGoals,
+      //   ];
+      //   return updatedGoals;
+      // });
+
     } catch (err) {
       setError(
         err.message ||
@@ -50,11 +56,10 @@ function App() {
 
   return (
     <div>
-      <h1>Checksum</h1>
       {error && <ErrorAlert errorText={error} />}
       <GoalInput onAddGoal={addGoalHandler} />
       {!isLoading && (
-        <CourseGoals goals={loadedChecksums}/>
+        <CourseGoals goals={loadedResponse}/>
       )}
     </div>
   );
