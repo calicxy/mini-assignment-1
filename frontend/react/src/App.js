@@ -13,7 +13,7 @@ function App() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/checksum-routetoapi', {
+      const response = await fetch('http://webserver/checksum-routetoapi', {
         method: 'POST',
         body: data,
         // headers: {
