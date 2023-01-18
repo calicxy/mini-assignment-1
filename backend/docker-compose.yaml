@@ -1,8 +1,17 @@
 version: "3.8"
 services:
   master:
-    image: '1e8560c6925e'
+    build: ./master
     ports: 
       - '5000:5000'
+    volumes:
+      - file_data:/app/data
   checksum:
-    image: '6ba64bcbeb88'
+    build: ./models/checksum
+    ports:
+      - '5001:5001'
+    volumes:
+      - file_data:/app/data
+
+volumes:
+  file_data:
