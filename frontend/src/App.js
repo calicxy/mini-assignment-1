@@ -16,13 +16,13 @@ function App() {
       try {
         const response = await fetch('http://localhost/goals');
 
-        const resData = await response.json();
+        // const resData = await response.json();
 
         if (!response.ok) {
-          throw new Error(resData.message || 'Fetching the goals failed.');
+          throw new Error(resData.message || 'Fetching failed.');
         }
 
-        setLoadedGoals(resData.goals);
+        // setLoadedGoals(resData.goals);
       } catch (err) {
         setError(
           err.message ||
@@ -39,7 +39,7 @@ function App() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost/goals', {
+      const response = await fetch('http://localhost/upload', {
         method: 'POST',
         body: JSON.stringify({
           text: goalText,
@@ -69,33 +69,6 @@ function App() {
       setError(
         err.message ||
           'Adding a goal failed - the server responsed with an error.'
-      );
-    }
-    setIsLoading(false);
-  }
-
-  async function deleteGoalHandler(goalId) {
-    setIsLoading(true);
-
-    try {
-      const response = await fetch('http://localhost/goals/' + goalId, {
-        method: 'DELETE',
-      });
-
-      const resData = await response.json();
-
-      if (!response.ok) {
-        throw new Error(resData.message || 'Deleting the goal failed.');
-      }
-
-      setLoadedGoals((prevGoals) => {
-        const updatedGoals = prevGoals.filter((goal) => goal.id !== goalId);
-        return updatedGoals;
-      });
-    } catch (err) {
-      setError(
-        err.message ||
-          'Deleting the goal failed - the server responsed with an error.'
       );
     }
     setIsLoading(false);

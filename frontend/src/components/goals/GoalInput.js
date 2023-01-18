@@ -4,39 +4,42 @@ import './GoalInput.css';
 import Card from '../UI/Card';
 
 function GoalInput(props) {
-  const [enteredGoalText, setEnteredGoalText] = useState('');
+  const [fileList, setFileList] = useState<FileList | null>(null);
 
-  function updateGoalTextHandler(event) {
-    setEnteredGoalText(event.target.value);
-  }
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFileList(e.target.files);
+  };
 
-  function goalSubmitHandler(event) {
-    event.preventDefault();
 
-    if (enteredGoalText.trim().length === 0) {
-      alert('Invalid text - please enter a longer one!');
+  function fileSubmitHandler(event) {
+    if (!fileList) {
       return;
     }
+    
+    const data = new FormData();
+    files.forEach((file, i) => {
+      data.append(`file-${i}`, file, file.name);
+    });
 
-    props.onAddGoal(enteredGoalText);
+    fetch('https://httpbin.org/post', {
+      method: 'POST',
+      body: data,
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((err) => console.error(err));
+  };
 
-    setEnteredGoalText('');
-  }
+  const files = fileList ? [...fileList] : [];
 
   return (
     <section id='goal-input'>
-      <Card>
-        <form onSubmit={goalSubmitHandler}>
-          <label htmlFor='text'>New Goal</label>
-          <input
-            type='text'
-            id='text'
-            value={enteredGoalText}
-            onChange={updateGoalTextHandler}
-          />
-          <button>Add Goal</button>
-        </form>
-      </Card>
+      <input
+        type='file'
+        id='file'
+        onChange={updateGoalTextHandler}
+        multiple
+      />
     </section>
   );
 }
