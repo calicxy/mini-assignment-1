@@ -17,7 +17,8 @@ function App() {
         method: 'POST',
         body: data,
         // headers: {
-        //   'Content-Type': 'application/json'
+        //   // 'Content-Type': 'application/json'
+        //   'Access-Control-Allow-Origin':'*'
         // }
       });
 
