@@ -8,6 +8,12 @@ app = Flask(__name__)
 CORS(app)
 uploads_dir = '/home/vest1/Desktop/multi-01-starting-setup/backend/data'
 
+@app.route("/checksum-routetoapi")
+param_dict = {
+    'file1':request.form.get('file1'),
+    'file2':request.form.get('file2')
+}
+requests.post(url, param_dict)
 
 # post both files at once
 # files saved into the data directory

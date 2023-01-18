@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import './GoalInput.css';
 import Card from '../UI/Card';
 
+const IP = 'https://localhost:3000'
+
 function GoalInput(props) {
   const [fileList, setFileList] = useState<FileList | null>(null);
 
@@ -21,7 +23,7 @@ function GoalInput(props) {
       data.append(`file-${i}`, file, file.name);
     });
 
-    fetch('https://httpbin.org/post', {
+    fetch(`${IP}/checksum-routetoapi`, {
       method: 'POST',
       body: data,
     })
