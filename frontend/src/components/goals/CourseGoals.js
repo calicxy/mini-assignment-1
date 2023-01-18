@@ -2,23 +2,20 @@ import React from 'react';
 
 import './CourseGoals.css';
 import Card from '../UI/Card';
-import GoalItem from './GoalItem';
 
 function CourseGoals(props) {
-  const hasNoGoals = !props.goals || props.goals.length === 0;
+  const hasNoFiles = !props.goals || props.goals.length === 0;
 
   return (
-    <section id='course-goals'>
+    <section id='checksum_results'>
       <Card>
-        {hasNoGoals && <h2>No goals found. Start adding some!</h2>}
+        {hasNoFiles && <h2>No files uploaded. Start uploading some!</h2>}
         <ul>
-          {props.goals.map((goal) => (
-            <GoalItem
-              key={goal.id}
-              id={goal.id}
-              text={goal.text}
-              onDelete={props.onDeleteGoal}
-            />
+          {props.goals.map((file, i) => (
+            <li key={i} >
+              {file.name}
+              {file.checksum}
+            </li>
           ))}
         </ul>
       </Card>

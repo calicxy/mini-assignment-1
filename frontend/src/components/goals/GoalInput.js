@@ -3,45 +3,47 @@ import React, { useState } from 'react';
 import './GoalInput.css';
 import Card from '../UI/Card';
 
-const IP = 'https://localhost:3000'
-
 function GoalInput(props) {
-  const [fileList, setFileList] = useState<FileList | null>(null);
+  const [fileList, setFileList] = useState(null);
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e) => {
     setFileList(e.target.files);
   };
 
-
-  function fileSubmitHandler(event) {
+  const fileSubmitHandler = (event) => {
     if (!fileList) {
       return;
     }
     
     const data = new FormData();
     files.forEach((file, i) => {
-      data.append(`file-${i}`, file, file.name);
+      data.append(`file${i}`, file, file.name);
     });
 
-    fetch(`${IP}/checksum-routetoapi`, {
-      method: 'POST',
-      body: data,
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-      .catch((err) => console.error(err));
+    props.onAddGoal(data)
+
   };
 
   const files = fileList ? [...fileList] : [];
 
   return (
     <section id='goal-input'>
-      <input
-        type='file'
-        id='file'
-        onChange={updateGoalTextHandler}
-        multiple
-      />
+      <Card>
+        <input
+          type='file'
+          // id='files'
+          onChange={handleFileChange}
+          multiple
+        />
+        <ul>
+          {files.map((file, i) => (
+            <li key={i}>
+              {file.name} - {file.type}
+            </li>
+          ))}
+        </ul>
+        <button onClick={fileSubmitHandler}>Upload</button>
+      </Card>
     </section>
   );
 }

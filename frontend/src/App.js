@@ -5,61 +5,34 @@ import CourseGoals from './components/goals/CourseGoals';
 import ErrorAlert from './components/UI/ErrorAlert';
 
 function App() {
-  const [loadedGoals, setLoadedGoals] = useState([]);
+  const [loadedChecksums, setLoadedChecksums] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  useEffect(function () {
-    async function fetchData() {
-      setIsLoading(true);
-
-      try {
-        const response = await fetch('http://localhost/goals');
-
-        // const resData = await response.json();
-
-        if (!response.ok) {
-          throw new Error(resData.message || 'Fetching failed.');
-        }
-
-        // setLoadedGoals(resData.goals);
-      } catch (err) {
-        setError(
-          err.message ||
-            'Fetching goals failed - the server responsed with an error.'
-        );
-      }
-      setIsLoading(false);
-    }
-
-    fetchData();
-  }, []);
-
-  async function addGoalHandler(goalText) {
+  async function addGoalHandler(data) {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost/upload', {
+      const response = await fetch('http://127.0.0.1:5000/checksum-routetoapi', {
         method: 'POST',
-        body: JSON.stringify({
-          text: goalText,
-        }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        body: data,
+        // headers: {
+        //   'Content-Type': 'application/json'
+        // }
       });
 
       const resData = await response.json();
 
       if (!response.ok) {
-        throw new Error(resData.message || 'Adding the goal failed.');
+        throw new Error(resData.message || 'Error calculating the checksum.');
       }
 
-      setLoadedGoals((prevGoals) => {
+      setLoadedChecksums((prevGoals) => {
         const updatedGoals = [
           {
-            id: resData.goal.id,
-            text: goalText,
+            id: resData.file.id,
+            name: resData.file.name,
+            checksum: resData.file.fileChecksum,
           },
           ...prevGoals,
         ];
@@ -76,10 +49,11 @@ function App() {
 
   return (
     <div>
+      <h1>Checksum</h1>
       {error && <ErrorAlert errorText={error} />}
       <GoalInput onAddGoal={addGoalHandler} />
       {!isLoading && (
-        <CourseGoals goals={loadedGoals} onDeleteGoal={deleteGoalHandler} />
+        <CourseGoals goals={loadedChecksums}/>
       )}
     </div>
   );
