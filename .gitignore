@@ -2,4 +2,5 @@
 env
 notes.txt
 node_modules
+frontend/react/node_modules
 package-lock.json
