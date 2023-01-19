@@ -6,7 +6,8 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
-uploads_dir = '/home/vest1/Desktop/multi-01-starting-setup/backend/data'
+# uploads_dir = '/home/vest1/Desktop/multi-01-starting-setup/backend/data'
+uploads_dir='/app/data'
 
 # post both files at once
 # files saved into the data directory
@@ -25,7 +26,7 @@ def determine_file_similarity():
         f1 = request.args.get('f1')
         f2 = request.args.get('f2')
         payload = {'f1': f1, 'f2': f2}
-        response = requests.get("http://127.0.0.1:5001", params=payload)
+        response = requests.get("http://checksum:5001", params=payload)
         return response.json()
 
 if __name__ == '__main__':
