@@ -1,11 +1,26 @@
 version: "3.8"
 services:
   react:
+    container_name: react
     build: ./react
     ports:
       - '3000:3000'
+    networks:
+      - default
+    
   webserver:
+    container_name: webserver
     build: ./webserver
     ports:
       - '5000:5000'
     tty: true
+    networks:
+      - default
+      - my-proxy-net
+
+networks:
+  default:
+    driver: bridge
+  my-proxy-net:
+    external:
+      name: connector

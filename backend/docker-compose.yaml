@@ -1,17 +1,29 @@
 version: "3.8"
 services:
   master:
+    container_name: master
     build: ./master
     ports: 
       - '5555:5555'
     volumes:
       - file_data:/app/data
+    networks:
+      - my-network
+
   checksum:
+    container_name: checksum
     build: ./models/checksum
     # ports:
     #   - '5001:5001'
     volumes:
       - file_data:/app/data
+    networks:
+      - my-network
 
 volumes:
   file_data:
+
+networks:
+  my-network:
+    name: connector
+    driver: bridge
