@@ -5,7 +5,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-url = 'http://127.0.0.1:5555'
+url = 'http://192.168.64.2:5555'
 
 @app.route("/checksum-routetoapi", methods=['POST'])
 def get_checksum():
@@ -16,7 +16,6 @@ def get_checksum():
     data = {
         'file1':(file1.filename, file1.stream, file1.content_type),
         'file2':(file2.filename, file2.stream, file2.content_type),
-
     }
     r = requests.post(url+'/upload', files=data)
 
@@ -27,7 +26,7 @@ def get_checksum():
         return response.json()
 
     else:
-        return make_response("Could not calculate checksum", 400)
+        return make_response("Could not upload files", 400)
 
 if __name__ == '__main__':
     app.run(debug=True)

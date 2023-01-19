@@ -3,7 +3,7 @@ services:
   master:
     build: ./master
     ports: 
-      - '5000:5000'
+      - '5555:5555'
     volumes:
       - file_data:/app/data
   checksum:

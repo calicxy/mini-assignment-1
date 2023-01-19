@@ -4,7 +4,7 @@ import subprocess
 # you can omit shell=True argument.
 def get_checksum(fp):
 # passing relative path does not work.
-    output = subprocess.run(["./backend/models/checksum/checksum.sh", fp], 
+    output = subprocess.run(["./checksum.sh", fp], 
                         # shell=True
                         capture_output=True
                         )
