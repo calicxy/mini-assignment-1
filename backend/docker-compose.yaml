@@ -8,8 +8,8 @@ services:
       - file_data:/app/data
   checksum:
     build: ./models/checksum
-    ports:
-      - '5001:5001'
+    # ports:
+    #   - '5001:5001'
     volumes:
       - file_data:/app/data
 
