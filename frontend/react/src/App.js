@@ -30,6 +30,8 @@ function App() {
       }
       else {
         setResponse(resData)
+        setError(null)
+        
       }
 
       
@@ -48,7 +50,7 @@ function App() {
     } catch (err) {
       setError(
         err.message ||
-          'Adding a goal failed - the server responsed with an error.'
+          'Calculating checksum failed - the server responsed with an error.'
       );
     }
     setIsLoading(false);
@@ -59,7 +61,7 @@ function App() {
       {error && <ErrorAlert errorText={error} />}
       <GoalInput onAddGoal={addGoalHandler} />
       {!isLoading && (
-        <CourseGoals goals={loadedResponse}/>
+        <CourseGoals goals={loadedResponse} response={loadedResponse} />
       )}
     </div>
   );

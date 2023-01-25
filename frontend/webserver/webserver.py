@@ -5,7 +5,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-url = 'http://172.26.0.2:5555'
+url = 'http://master:5555'
 
 @app.route("/checksum-routetoapi", methods=['POST'])
 def get_checksum():
