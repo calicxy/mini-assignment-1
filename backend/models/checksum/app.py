@@ -1,4 +1,5 @@
 import os
+from werkzeug.utils import secure_filename
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from check_file_similarity import get_checksum
@@ -7,7 +8,16 @@ app = Flask(__name__)
 CORS(app)
 uploads_dir = '/home/vest1/Desktop/multi-01-starting-setup/backend/data'
 
-@app.route('/', methods=['GET'])
+@app.route('/upload', methods=['POST'])
+def upload_files():
+    if request.method == 'POST':
+        f1 = request.files['file1']
+        f2 = request.files['file2']
+        f1.save(os.path.join(uploads_dir, secure_filename(f1.filename)))
+        f2.save(os.path.join(uploads_dir, secure_filename(f2.filename)))
+        return 'file uploaded successfully\n'
+
+@app.route('/checksum', methods=['GET'])
 def determine_file_similarity():
     if request.method == 'GET':
         f1 = request.args.get('f1')

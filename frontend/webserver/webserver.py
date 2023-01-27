@@ -6,7 +6,7 @@ app = Flask(__name__)
 CORS(app)
 
 uploads_dir = '/home/vest1/Desktop/multi-01-starting-setup/backend/data'
-url = 'http://127.0.0.1:5555'
+url = 'http://127.0.0.1:5001'
 
 @app.route("/checksum-routetoapi", methods=['POST'])
 def get_checksum():
