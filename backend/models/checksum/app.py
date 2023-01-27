@@ -6,7 +6,7 @@ from check_file_similarity import get_checksum
 
 app = Flask(__name__)
 CORS(app)
-uploads_dir = '/home/vest1/Desktop/multi-01-starting-setup/backend/data'
+uploads_dir = '/app/data'
 
 @app.route('/upload', methods=['POST'])
 def upload_files():

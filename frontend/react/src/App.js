@@ -13,7 +13,7 @@ function App() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/checksum-routetoapi', {
+      const response = await fetch('http://localhost:5000/checksum-routetoapi', {
         method: 'POST',
         body: data,
         // headers: {
@@ -30,18 +30,14 @@ function App() {
       }
       else {
         setResponse(resData)
+        setError(null)
       }
 
       
       // setLoadedChecksums((prevGoals) => {
       //   const updatedGoals = [
       //     {
-      //       id: resData.file.id,
-      //       name: resData.file.name,
-      //       checksum: resData.file.fileChecksum,
-      //     },
-      //     ...prevGoals,
-      //   ];
+      //       id: resData.file.id,/127.0.0.1
       //   return updatedGoals;
       // });
 
@@ -59,7 +55,7 @@ function App() {
       {error && <ErrorAlert errorText={error} />}
       <GoalInput onAddGoal={addGoalHandler} />
       {!isLoading && (
-        <CourseGoals goals={loadedResponse}/>
+        <CourseGoals goals={loadedResponse} response={loadedResponse}/>
       )}
     </div>
   );

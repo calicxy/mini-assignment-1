@@ -1,0 +1,10 @@
+activate venv
+. .venv/bin/activate
+
+curl command to master:
+curl -X POST http://172.29.0.2:5555/upload -F file1=@/home/vest1/Desktop/multi-01-starting-setup/backend/data/requirements.txt -F file2=@/home/vest1/Desktop/multi-01-starting-setup/backend/data/check_file_similarity.py
+curl -X GET "http://172.29.0.2:5555/checksum?f1=check_file_similarity.py&f2=requirements.txt"
+
+
+curl command to checksum
+curl -X GET "http://127.0.0.1:5001/?f1=check_file_similarity.py&f2=requirements.txt"
